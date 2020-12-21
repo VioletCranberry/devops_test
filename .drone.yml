@@ -11,9 +11,18 @@ steps:
   volumes:
   - name: go_cache
     path: /go
-
+  commands:
+  - apk add git
+  - cd app
+  - go mod download
+  - go build
 volumes:
 - name: go_cache
   host:
     path: /tmp/drone/cache/go
-  
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
