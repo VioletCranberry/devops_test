@@ -1,0 +1,23 @@
+---
+
+- name: setup env-files
+  template:
+    src: runner.j2
+    dest: "/var/tmp/runner.env"
+    owner: root
+    group: root
+    mode: "0600"
+  tags: drone_io_runner
+
+- name: setup runner
+  docker_container:
+    name: drone-runner
+    image: "{{ drone_runner_image }}"
+    pull: true
+    restart_policy: always
+    env_file: "/var/tmp/runner.env"
+    published_ports:
+      - "3000:3000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  tags: drone_io_runner

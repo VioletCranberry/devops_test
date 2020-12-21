@@ -1,0 +1,4 @@
+---
+# defaults file for common
+
+epel_release_rpm: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm

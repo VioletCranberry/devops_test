@@ -1,0 +1,8 @@
+---
+
+- hosts: tag_Role_drone
+  vars_files:
+    - ../../common_vars/common.yml
+  roles:
+    - docker
+  gather_facts: no

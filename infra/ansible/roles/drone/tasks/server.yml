@@ -1,0 +1,24 @@
+---
+
+- name: setup env-files
+  template:
+    src: server.j2
+    dest: "/var/tmp/server.env"
+    owner: root
+    group: root
+    mode: "0600"
+  tags: drone_io_server
+
+- name: setup server
+  docker_container:
+    name: drone-server
+    image: "{{ drone_server_image }}"
+    pull: true
+    restart_policy: always
+    env_file: "/var/tmp/server.env"
+    published_ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/lib/drone:/data"
+  tags: drone_io_server

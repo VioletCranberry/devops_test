@@ -1,0 +1,8 @@
+---
+
+- hosts: tag_Role_ervcp
+  vars_files:
+    - ../../common_vars/common.yml
+  roles:
+    - nginx
+  gather_facts: yes

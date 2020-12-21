@@ -1,0 +1,19 @@
+---
+# tasks file for docker
+
+- name: install docker
+  yum:
+    name: 
+      - python-pip
+      - docker
+    state: present
+
+- name: install docker python
+  pip:
+    name: docker
+
+- name: enable docker
+  service:
+    name: docker
+    state: started
+    enabled: true

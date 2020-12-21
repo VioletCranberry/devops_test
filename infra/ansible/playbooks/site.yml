@@ -1,0 +1,17 @@
+---
+
+- name: common role
+  tags: common
+  import_playbook: role/common.yml
+
+- name: docker role
+  tags: docker
+  import_playbook: role/docker.yml
+
+- name: drone role
+  tags: drone
+  import_playbook: role/drone.yml
+
+- name: nginx role
+  tags: nginx
+  import_playbook: role/nginx.yml

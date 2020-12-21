@@ -1,0 +1,19 @@
+---
+
+kind: pipeline
+type: docker
+name: build pipeline
+
+steps:
+
+- name: go-build
+  image: golang:1.12-alpine
+  volumes:
+  - name: go_cache
+    path: /go
+
+volumes:
+- name: go_cache
+  host:
+    path: /tmp/drone/cache/go
+  

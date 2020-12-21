@@ -1,0 +1,13 @@
+---
+# tasks file for common
+
+- name: update all
+  yum:
+    state: latest
+    name: '*'
+    update_cache: yes
+
+- name: install epel-release
+  yum:
+    name: "{{ epel_release_rpm }}"
+    state: latest

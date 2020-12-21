@@ -1,0 +1,8 @@
+---
+# tasks file for drone
+
+- name: setup server
+  include_tasks: server.yml
+
+- name: setup runner
+  include_tasks: runner.yml

@@ -1,0 +1,37 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name _;
+
+    error_log /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+
+{% for group in proxy_groups %}
+
+{% set group_name = group | replace('tag_Role_', '') %}
+{% set host_dns = groups[group] | map('extract',
+    hostvars, 'ec2_private_dns_name') | join(' ') %}
+
+{% if group_name == 'drone' %}
+
+    location / {
+
+        proxy_pass http://{{ host_dns }}/;        
+
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_buffering off;
+
+        chunked_transfer_encoding off;
+
+    }
+{% endif %}
+
+{% endfor %}
+}
