@@ -6,16 +6,49 @@ name: build pipeline
 
 steps:
 
-- name: go-build
-  image: golang:1.12-alpine
+- name: unit tests
+  image: golang:1.12-stretch
+  pull: if-not-exists
   volumes:
   - name: go_cache
     path: /go
   commands:
-  - apk add git
+    - cd app
+    - go get
+    - go test -v
+
+- name: go build
+  image: golang:1.12-stretch
+  pull: if-not-exists
+  volumes:
+  - name: go_cache
+    path: /go
+  commands:
   - cd app
-  - go mod download
+  - go get
   - go build
+
+- name: redis           
+  image: redis:5.0-alpine
+  detach: true
+
+- name: smoke tests
+  image: golang:1.12-stretch
+  pull: if-not-exists
+  commands:
+    - apt-get update && apt-get install -y netcat
+    - cd app
+    - go get
+    - go build -o test_run
+    - ./test_run &
+    - /bin/bash ../smoke.sh
+  volumes:
+  - name: go_cache
+    path: /go
+  environment:
+    ERVCP_DB_HOST: redis
+    ERVCP_DB_PORT: "6379"
+
 volumes:
 - name: go_cache
   host:

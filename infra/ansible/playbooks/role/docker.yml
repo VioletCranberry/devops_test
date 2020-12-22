@@ -1,6 +1,8 @@
 ---
 
-- hosts: tag_Role_drone
+- hosts: 
+    - tag_Role_drone
+    - tag_Role_ervcp
   vars_files:
     - ../../common_vars/common.yml
   roles:
