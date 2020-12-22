@@ -1,8 +1,5 @@
 # Drone docker runner configuration
 
-{% set lb_addr = groups[frontend] | map('extract',
-    hostvars, 'ec2_ip_address') | join(' ') %}
-
 DRONE_RUNNER_CAPACITY={{ runner_capacity }}
 DRONE_RPC_PROTO={{ drone_proto }}
 DRONE_RPC_HOST={{ lb_addr }}

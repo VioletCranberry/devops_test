@@ -1,6 +1,10 @@
 ---
 # tasks file for drone
 
+- name: set load balancer addr
+  set_fact:
+    lb_addr: "{{ groups[frontend] | map('extract', hostvars, 'ec2_ip_address') | join(' ') }}"
+
 - name: setup server
   include_tasks: server.yml
 

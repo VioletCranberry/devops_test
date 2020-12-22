@@ -1,8 +1,5 @@
 # Drone server configuration
 
-{% set lb_addr = groups[frontend] | map('extract',
-    hostvars, 'ec2_ip_address') | join(' ') %}
-
 DRONE_GITHUB_CLIENT_SECRET={{ gitlab.client_secret }}
 DRONE_GITHUB_CLIENT_ID={{ gitlab.client_id }}
 DRONE_SERVER_HOST={{ lb_addr }}
@@ -10,4 +7,3 @@ DRONE_SERVER_PROTO={{ drone_proto }}
 DRONE_RPC_SECRET={{ rpc_secret }}
 DRONE_USER_FILTER={{ drone_users | join(',') }}
 DRONE_USER_CREATE={{ drone_default_admin }}
-DRONE_LOGS_DEBUG=true

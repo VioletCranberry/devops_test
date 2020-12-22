@@ -23,14 +23,14 @@ function key_test() {
 
 for url in '/' '/health' '/assets/'; do
   status_code=$(url_test "$url")
-  echo "[$url]:[$status_code]"
+  echo -e "\n [$url]:[$status_code]"
   if [ "$status_code" != '200' ]; then
     exit 1; fi
 done
 
 for key in 'count'; do
   value=$(key_test "$key")
-  echo "[$key]:[$value]"
+  echo -e "\n [$key]:[$value]"
   if [ "$value" == 0 ]; then
     exit 1; fi
 done
