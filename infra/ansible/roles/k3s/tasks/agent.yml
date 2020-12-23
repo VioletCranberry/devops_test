@@ -1,0 +1,9 @@
+---
+
+- name: start agent node
+  shell: ./k3s.sh
+  args:
+    chdir: /tmp/
+  environment:
+    K3S_URL: "https://{{ master_ip }}:6443"
+    K3S_TOKEN: "{{ master_token }}"

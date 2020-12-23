@@ -1,11 +1,11 @@
 variable "availability_zone" {
-  type        = string
+  type = string
 }
 
 variable "environment" {
-  type        = string
+  type = string
 }
 
 variable "master_key" {
-  type        = string
+  type = string
 }

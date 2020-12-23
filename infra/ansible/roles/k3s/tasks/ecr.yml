@@ -1,0 +1,22 @@
+---
+
+- name: get aws caller id 
+  aws_caller_info:
+  register: caller_info
+
+- name: copy ecr rotation script
+  template:
+    src: ecr-rotate.j2
+    dest: /etc/ecr-rotate.sh
+    mode: 0700
+
+- name: generate new credentials
+  shell: ./ecr-rotate.sh
+  args:
+    chdir: /etc/
+
+- name: set rotation
+  cron:
+    name: "ecr-rotate"
+    job: "/etc/ecr-rotate.sh"
+    special_time: hourly

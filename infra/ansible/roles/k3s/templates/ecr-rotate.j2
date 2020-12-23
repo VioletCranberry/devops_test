@@ -1,0 +1,25 @@
+#!/bin/bash
+
+secret_name='ecr-login-token'
+
+aws_account='{{ caller_info.account }}'
+aws_region='eu-central-1'
+
+function get_login() {
+    local token
+    token="$(aws ecr --region="$aws_region" get-authorization-token `
+            `--output text `
+            `--query authorizationData[].authorizationToken `
+            `| base64 -d | cut -d: -f2)"
+    echo "$token"
+}
+
+function create_secret() {
+    /usr/local/bin/k3s kubectl delete secret --ignore-not-found "$secret_name"
+    /usr/local/bin/k3s kubectl create secret docker-registry "$secret_name" `
+    `--docker-server=https://"$aws_account".dkr.ecr."$aws_region".amazonaws.com `
+    `--docker-password="$(get_login)" `
+    `--docker-username=AWS
+}
+
+create_secret

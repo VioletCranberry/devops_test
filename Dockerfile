@@ -11,5 +11,7 @@ RUN go build -o app .
 
 FROM scratch AS production
 
+COPY --from=build-env /build/assets .
 COPY --from=build-env /build/app .
+
 ENTRYPOINT ["./app"]

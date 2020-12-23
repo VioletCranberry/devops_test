@@ -17,13 +17,13 @@ resource "aws_security_group" "common" {
   }
 
   tags = {
-        Name = "${var.environment}-common"
-    }
+    Name = "${var.environment}-common"
+  }
 }
 
-resource "aws_security_group" "frontend" {
-  name        = "${var.environment}-frontend"
-  description = "Frontend security group"
+resource "aws_security_group" "drone" {
+  name        = "${var.environment}-drone"
+  description = "Drone.io security group"
 
   ingress {
     from_port   = 80
@@ -40,29 +40,52 @@ resource "aws_security_group" "frontend" {
   }
 
   tags = {
-      Name = "${var.environment}-frontend"
+    Name = "${var.environment}-drone"
   }
 }
 
-resource "aws_security_group" "backend" {
-  name        = "${var.environment}-backend"
-  description = "Backend security group"
+resource "aws_security_group" "ervcp" {
+  name        = "${var.environment}-ervcp"
+  description = "ERVCP security group"
 
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    security_groups = [aws_security_group.frontend.id]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    security_groups = [aws_security_group.frontend.id]
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 6443
+    to_port     = 6443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-      Name = "${var.environment}-backend"
+    Name = "${var.environment}-ervcp"
+  }
+}
+
+resource "aws_security_group" "k3s" {
+  name        = "${var.environment}-k3s"
+  description = "k3s security group"
+
+  ingress {
+    from_port = 6443
+    to_port   = 6443
+    protocol  = "tcp"
+    self      = true
+  }
+
+  tags = {
+    Name = "${var.environment}-k3s"
   }
 }

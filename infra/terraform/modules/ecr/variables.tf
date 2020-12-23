@@ -1,11 +1,11 @@
 variable "environment" {
-  type        = string
+  type = string
 }
 
 variable "ecr_name" {
-  type        = string
+  type = string
 }
 
 variable "role_access" {
-  type        = list
+  type = list
 }

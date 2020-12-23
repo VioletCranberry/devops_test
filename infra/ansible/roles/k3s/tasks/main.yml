@@ -1,0 +1,27 @@
+---
+# tasks file for k3s
+
+- name: download k3s
+  uri:
+    url: https://get.k3s.io
+    dest: /tmp/k3s.sh
+    mode: 0755
+
+- name: set master ip
+  set_fact:
+    master_ip: "{{ groups[k3s_master_group] | map('extract', hostvars, 'ec2_ip_address') | join(' ') }}"
+
+- name: start master node
+  import_tasks: master.yml
+  when: 
+    - inventory_hostname in groups[k3s_master_group]
+
+- name: start agent node
+  import_tasks: agent.yml
+  when: 
+    - inventory_hostname in groups[_k3s_agent_group]
+
+- name: setup ecr access
+  import_tasks: ecr.yml
+  when: 
+    - inventory_hostname in groups[k3s_master_group]

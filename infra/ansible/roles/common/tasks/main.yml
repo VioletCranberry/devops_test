@@ -5,9 +5,16 @@
   yum:
     state: latest
     name: '*'
-    update_cache: yes
 
-- name: install epel-release
+- name: install requirements
   yum:
-    name: "{{ epel_release_rpm }}"
+    name: 
+      - "{{ epel_release_rpm }}"
+      - python-pip
     state: latest
+
+- name: install ansible requirements
+  pip:
+    name: 
+      - docker
+      - boto3

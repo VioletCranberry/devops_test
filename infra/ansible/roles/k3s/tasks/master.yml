@@ -1,0 +1,8 @@
+---
+
+- name: start master node
+  shell: ./k3s.sh --tls-san "{{ master_ip }}"
+  args:
+    chdir: /tmp/
+  environment:
+    K3S_TOKEN: "{{ master_token }}"

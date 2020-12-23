@@ -2,16 +2,20 @@
 
 - name: common role
   tags: common
-  import_playbook: role/common.yml
+  import_playbook: >-
+    role/common.yml
 
 - name: docker role
   tags: docker
-  import_playbook: role/docker.yml
+  import_playbook: >-
+    role/docker.yml
 
 - name: drone role
   tags: drone
-  import_playbook: role/drone.yml
+  import_playbook: >-
+   role/drone.yml
 
-- name: nginx role
-  tags: nginx
-  import_playbook: role/nginx.yml
+- name: k3s role
+  tags: k8s
+  import_playbook: >-
+    role/k3s.yml
