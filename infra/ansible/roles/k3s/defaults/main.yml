@@ -11,3 +11,5 @@ master_token: !vault |
 
 k3s_master_group: tag_Role_ervcp
 _k3s_agent_group: tag_Role_drone
+
+aws_region: eu-central-1

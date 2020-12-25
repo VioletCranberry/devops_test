@@ -3,7 +3,7 @@
 secret_name='ecr-login-token'
 
 aws_account='{{ caller_info.account }}'
-aws_region='eu-central-1'
+aws_region='{{ aws_region }}'
 
 function get_login() {
     local token

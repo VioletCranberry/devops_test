@@ -1,0 +1,19 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ervcp
+  labels:
+    component: ervcp
+spec:
+  template:
+    spec:
+      containers:
+        - name: ervcp
+          ports:
+            - containerPort: 8080
+              $patch: delete
+            - containerPort: 9090
+              protocol: TCP
+              name: ervcp

@@ -1,0 +1,63 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ervcp
+  labels:
+    component: ervcp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: ervcp
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        component: ervcp
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: level
+                operator: In
+                values:
+                - private
+                - agent
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: component
+                  operator: In
+                  values:
+                  - ervcp
+              topologyKey: level
+            weight: 50
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: ervcp-env
+        image: 137977054430.dkr.ecr.eu-central-1.amazonaws.com/internal-ervcp_repo:latest
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 1
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        name: ervcp
+        ports:
+        - containerPort: 8080
+          name: ervcp
+          protocol: TCP

@@ -85,6 +85,13 @@ resource "aws_security_group" "k3s" {
     self      = true
   }
 
+  ingress {
+    from_port = 8472
+    to_port   = 8472
+    protocol  = "udp"
+    self      = true
+  }
+
   tags = {
     Name = "${var.environment}-k3s"
   }

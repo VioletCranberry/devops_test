@@ -1,7 +1,7 @@
 ---
 
 - name: start master node
-  shell: ./k3s.sh --tls-san "{{ master_ip }}"
+  shell: ./k3s.sh --tls-san "{{ master_ip }}" --node-label level=master
   args:
     chdir: /tmp/
   environment:

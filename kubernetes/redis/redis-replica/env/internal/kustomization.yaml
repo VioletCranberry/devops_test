@@ -1,0 +1,25 @@
+---
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patchesStrategicMerge:
+  - patches/service.yaml
+  - patches/ports.yaml
+
+namespace: default
+
+images:
+  - name: redis:5.0-alpine
+
+replicas:
+  - name: redis-replica
+    count: 2
+    
+commonLabels:
+  environment: internal
+  team: ervcp
+  component: redis-replica

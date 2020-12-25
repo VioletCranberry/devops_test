@@ -1,7 +1,7 @@
 ---
 
 - name: start agent node
-  shell: ./k3s.sh
+  shell: ./k3s.sh --node-label level=agent 
   args:
     chdir: /tmp/
   environment:

@@ -1,0 +1,19 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    component: redis-master
+spec:
+  template:
+    spec:
+      containers:
+        - name: redis-master
+          volumeMounts:
+          - mountPath: /data
+            name: redis-data
+      volumes:
+        - name: redis-data
+          emptyDir: {}

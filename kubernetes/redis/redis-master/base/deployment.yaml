@@ -1,0 +1,62 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    component: redis-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: redis-master
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        component: redis-master
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: level
+                operator: In
+                values:
+                - master
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: component
+                  operator: In
+                  values:
+                  - redis-master
+              topologyKey: level
+            weight: 50
+      containers:
+      - name: redis-master
+        image: redis:5.0-alpine
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6379
+          name: redis-master
+          protocol: TCP
+        command:
+          - "redis-server"
+        args:
+          - "--appendonly" 
+          - "yes"
+        volumeMounts:
+          - mountPath: /data
+            name: redis-data
+      volumes:
+        - name: redis-data
+          emptyDir: {}

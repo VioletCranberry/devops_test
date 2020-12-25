@@ -1,0 +1,34 @@
+---
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - resources/ingress.yaml
+
+patchesStrategicMerge:
+  - patches/liveness.yaml
+  - patches/service.yaml
+  - patches/ports.yaml
+  - patches/ecr.yaml
+
+namespace: default
+
+images:
+  - name: 137977054430.dkr.ecr.eu-central-1.amazonaws.com/internal-ervcp_repo:latest
+
+replicas:
+  - name: ervcp
+    count: 2
+    
+configMapGenerator:
+  - name: ervcp-env
+    envs:
+      - configs/application.env
+    behavior: create
+
+commonLabels:
+  environment: internal
+  team: ervcp
+  component: ervcp

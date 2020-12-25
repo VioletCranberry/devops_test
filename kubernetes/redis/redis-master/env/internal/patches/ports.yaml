@@ -1,0 +1,19 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    component: redis-master
+spec:
+  template:
+    spec:
+      containers:
+        - name: redis-master
+          ports:
+            - containerPort: 6379
+              $patch: delete
+            - containerPort: 6379
+              protocol: TCP
+              name: redis-master

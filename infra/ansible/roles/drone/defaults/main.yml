@@ -37,4 +37,4 @@ drone_users:
   - VioletCranberry
 drone_proto: http
 
-frontend: tag_Role_ervcp
+server_group: tag_Role_drone
