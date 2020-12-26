@@ -7,6 +7,7 @@ resources:
   - ../../base
 
 patchesStrategicMerge:
+  - patches/resources.yaml
   - patches/service.yaml
   - patches/ports.yaml
   - patches/volume.yaml

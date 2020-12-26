@@ -8,6 +8,7 @@ resources:
   - resources/ingress.yaml
 
 patchesStrategicMerge:
+  - patches/resources.yaml
   - patches/liveness.yaml
   - patches/service.yaml
   - patches/ports.yaml

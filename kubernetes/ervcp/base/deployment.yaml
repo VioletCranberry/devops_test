@@ -61,3 +61,7 @@ spec:
         - containerPort: 8080
           name: ervcp
           protocol: TCP
+        resources:
+            limits:
+              cpu: "0.1"
+              memory: 50Mi   

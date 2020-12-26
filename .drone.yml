@@ -31,7 +31,7 @@ steps:
   image: redis:5.0-alpine
   detach: true
 
-- name: smoke tests
+- name: integration tests
   image: golang:1.12-stretch
   pull: if-not-exists
   commands:
@@ -40,7 +40,7 @@ steps:
     - go get
     - go build -o test_run
     - ./test_run &
-    - /bin/bash ../smoke.sh
+    - /bin/bash ../integration.sh
   volumes:
   - name: go_cache
     path: /go
