@@ -1,0 +1,33 @@
+---
+
+apiVersion: batch/v1beta1           
+kind: CronJob                        
+metadata:
+  name: cron-update
+spec:
+  schedule: "* * * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 2           
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: cron-update
+          containers:
+          - name: cron-update
+            image: expert360/kubectl-awscli:v1.18.6
+            imagePullPolicy: IfNotPresent
+            command:
+              - "/scripts/image_check.sh"
+            volumeMounts:
+            - name: cron-update
+              mountPath: /scripts
+          restartPolicy: OnFailure 
+          volumes:
+            - name: cron-update
+              configMap:
+                name: cron-update
+                items:
+                - key: image_check.sh
+                  path: image_check.sh
+                  mode: 0755

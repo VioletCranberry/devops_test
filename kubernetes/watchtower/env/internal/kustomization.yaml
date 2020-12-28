@@ -1,0 +1,21 @@
+---
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patchesStrategicMerge:
+  - patches/volume-mount.yaml
+  - patches/schedule.yaml
+  - patches/volume.yaml
+
+namespace: default
+
+images:
+  - name: expert360/kubectl-awscli:v1.18.6
+
+commonLabels:
+  environment: internal
+  

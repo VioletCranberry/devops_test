@@ -1,0 +1,17 @@
+---
+
+apiVersion: batch/v1beta1           
+kind: CronJob                        
+metadata:
+  name: cron-update
+spec:
+  schedule: "* * * * *"            
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cron-update
+            volumeMounts:
+            - name: cron-update
+              mountPath: /scripts

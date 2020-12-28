@@ -1,0 +1,13 @@
+---
+
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: cron-update
+subjects:
+  - kind: ServiceAccount
+    name: cron-update
+roleRef:
+  kind: Role
+  name: cron-update
+  apiGroup: rbac.authorization.k8s.io
