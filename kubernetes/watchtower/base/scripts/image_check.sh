@@ -10,7 +10,7 @@ function get_sha_local() {
 function get_sha_remote() {
   local repo="$1" region="$2" result
   result="$(aws ecr describe-images --repository-name "$repo" --region "$region" | `
-  `jq -r '.imageDetails[0] .imageDigest')"
+  `jq -r '.imageDetails[-1] .imageDigest')"
   echo "$result"
 }
 

@@ -43,7 +43,7 @@ spec:
             weight: 50
       containers:
       - name: redis-master
-        image: redis:5.0-alpine
+        image: redis-master
         imagePullPolicy: Always
         ports:
         - containerPort: 6379

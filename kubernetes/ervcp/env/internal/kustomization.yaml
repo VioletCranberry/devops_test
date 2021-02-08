@@ -17,7 +17,9 @@ patchesStrategicMerge:
 namespace: default
 
 images:
-  - name: 137977054430.dkr.ecr.eu-central-1.amazonaws.com/internal-ervcp_repo:latest
+  - name: ervcp
+    newName: 137977054430.dkr.ecr.eu-central-1.amazonaws.com/internal-ervcp_repo
+    newTag: latest
 
 replicas:
   - name: ervcp

@@ -44,7 +44,7 @@ spec:
             weight: 50
       containers:
       - name: redis-replica
-        image: redis:5.0-alpine
+        image: redis-replica
         imagePullPolicy: Always
         ports:
         - containerPort: 6379

@@ -46,7 +46,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: ervcp-env
-        image: 137977054430.dkr.ecr.eu-central-1.amazonaws.com/internal-ervcp_repo:latest
+        image: ervcp
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 1

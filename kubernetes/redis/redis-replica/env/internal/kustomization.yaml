@@ -14,7 +14,9 @@ patchesStrategicMerge:
 namespace: default
 
 images:
-  - name: redis:5.0-alpine
+  - name: redis-replica
+    newName: redis
+    newTag: 5.0-alpine
 
 replicas:
   - name: redis-replica
